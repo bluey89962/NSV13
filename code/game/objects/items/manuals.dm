@@ -244,41 +244,17 @@
 // A book that links to the wiki
 /obj/item/book/manual/wiki
 	var/page_link = ""
-	window_size = "970x710"
 
-/obj/item/book/manual/wiki/attack_self()
-	if(!dat)
-		initialize_wikibook()
-	return ..()
+/obj/item/book/manual/wiki/Initialize(mapload)
+	. = ..()
 
-/obj/item/book/manual/wiki/proc/initialize_wikibook()
+/obj/item/book/manual/wiki/attack_self(mob/user)
 	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(wikiurl)
-		dat = {"
-
-			<html>
-			<head>
-			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-			<style>
-				iframe {
-					display: none;
-				}
-			</style>
-			</head>
-			<body>
-			<script type="text/javascript">
-				function pageloaded(myframe) {
-					document.getElementById("loading").style.display = "none";
-					myframe.style.display = "inline";
-    			}
-			</script>
-			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-			</body>
-
-			</html>
-
-			"}
+	if(!wikiurl)
+		return
+	if(alert(user, "This will open the wiki page in your browser. Are you sure?", null, "Yes", "No") != "Yes")
+		return
+	DIRECT_OUTPUT(user, link("[wikiurl]/[page_link]"))
 
 /obj/item/book/manual/wiki/chemistry
 	name = "Chemistry Textbook"
@@ -353,7 +329,7 @@
 	icon_state = "barbook"
 	author = "Sir John Rose"
 	title = "Barman Recipes: Mixing Drinks and Changing Lives"
-	page_link = "Guide_to_food_and_drinks"
+	page_link = "Guide_to_drinks" //NSV13 - Split the Guide to Food and Drinks into two separate pages
 
 /obj/item/book/manual/wiki/robotics_cyborgs
 	name = "Robotics for Dummies"
@@ -389,7 +365,7 @@
 	icon_state ="cooked_book"
 	author = "the Kanamitan Empire"
 	title = "To Serve Man"
-	page_link = "Guide_to_food_and_drinks"
+	page_link = "Guide_to_food" //NSV13 - Split the Guide to Food and Drinks into two separate pages
 
 /obj/item/book/manual/wiki/tcomms
 	name = "Subspace Telecommunications And You"
@@ -434,57 +410,57 @@
 	page_link = "Guide_to_toxins"
 
 //NSV13 - Change
-//Standard operating prosedure books. Inherited of wiki books.
+//Standard operating procedure books. Inherited of wiki books.
 
 /obj/item/book/manual/wiki/sop
 	author = "Ta-Go Clown Resources"
 	icon = 'nsv13/icons/obj/nsv_bureaucracy.dmi' //created own dmi for the books
 
 /obj/item/book/manual/wiki/sop/security
-	name = "Standard operating Prosedure: Security"
-	title = "Standard operating Prosedure: Security"
+	name = "Standard operating Procedure: Security"
+	title = "Standard operating Procedure: Security"
 	page_link = "Department_Standard_Operating_Procedure:_Security"
 	icon_state = "sop_sec"
 
 /obj/item/book/manual/wiki/sop/science
-	name = "Standard operating Prosedure: Science"
-	title = "Standard operating Prosedure: Science"
+	name = "Standard operating Procedure: Science"
+	title = "Standard operating Procedure: Science"
 	page_link = "Department_Standard_Operating_Procedure:_Science"
 	icon_state = "sop_sci"
 
 /obj/item/book/manual/wiki/sop/service
-	name = "Standard operating Prosedure: Service"
-	title = "Standard operating Prosedure: Service"
+	name = "Standard operating Procedure: Service"
+	title = "Standard operating Procedure: Service"
 	page_link = "Department_Standard_Operating_Procedure:_Service/Civilian"
 	icon_state = "sop_service"
 
 /obj/item/book/manual/wiki/sop/command
-	name = "Standard operating Prosedure: Command"
-	title = "Standard operating Prosedure: Command"
+	name = "Standard operating Procedure: Command"
+	title = "Standard operating Procedure: Command"
 	page_link = "Department_Standard_Operating_Procedure:_Command"
 	icon_state = "sop_comdom"
 
 /obj/item/book/manual/wiki/sop/engineering
-	name = "Standard operating Prosedure: Engineering"
-	title = "Standard operating Prosedure: Engineering"
+	name = "Standard operating Procedure: Engineering"
+	title = "Standard operating Procedure: Engineering"
 	page_link = "Department_Standard_Operating_Procedure:_Engineering"
 	icon_state = "sop_engi"
 
 /obj/item/book/manual/wiki/sop/supply
-	name = "Standard operating Prosedure: Supply"
-	title = "Standard operating Prosedure: Supply"
+	name = "Standard operating Procedure: Supply"
+	title = "Standard operating Procedure: Supply"
 	page_link = "Department_Standard_Operating_Procedure:_Supply"
 	icon_state = "sop_cargo"
 
 /obj/item/book/manual/wiki/sop/medical
-	name = "Standard operating Prosedure: Medical"
-	title = "Standard operating Prosedure: Medical"
+	name = "Standard operating Procedure: Medical"
+	title = "Standard operating Procedure: Medical"
 	page_link = "Department_Standard_Operating_Procedure:_Medical"
 	icon_state = "sop_med"
 
 /obj/item/book/manual/wiki/sop/munitions
-	name = "Standard operating Prosedure: Munitions"
-	title = "Standard operating Prosedure: Munitions"
+	name = "Standard operating Procedure: Munitions"
+	title = "Standard operating Procedure: Munitions"
 	page_link = "Department_Standard_Operating_Procedure:_Munitions"
 	icon_state = "sop_muni"
 
@@ -532,3 +508,10 @@
 	author = "Nanotrasen"
 	title = "Chemical Factories Without Narcotics"
 	page_link = "Guide_to_plumbing"
+
+/obj/item/book/manual/wiki/xenoarchaeology
+	name = "Xenoarchaeology Fieldguide"
+	icon_state ="xenoarchaeology"
+	author = "Phillippe French"
+	title = "Xenoarchaeology Fieldguide"
+	page_link = "Guide_to_Artifacts"

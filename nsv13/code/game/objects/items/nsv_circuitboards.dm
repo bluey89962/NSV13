@@ -19,7 +19,7 @@
 
 /obj/item/circuitboard/computer/ship/dradis/cargo
 	name = "circuit board (cargo dradis computer)"
-	build_path = /obj/machinery/computer/ship/dradis/cargo
+	build_path = /obj/machinery/computer/ship/dradis/minor/cargo
 
 //FTL nav
 /obj/item/circuitboard/computer/ship/navigation
@@ -52,12 +52,6 @@
 /obj/item/circuitboard/computer/ship/munitions_computer
 	name = "circuit board (munitions control computer)"
 	build_path = /obj/machinery/computer/ship/munitions_computer
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-
-/obj/item/circuitboard/computer/ship/munitions_computer/Destroy(force=FALSE)
-	if(!force)
-		return QDEL_HINT_LETMELIVE
-	return ..()
 
 /obj/item/circuitboard/computer/ship/ordnance_computer
 	name = "circuit board (ordnance computer)"
@@ -135,7 +129,7 @@
 	)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
-/obj/item/circuitboard/machine/pdc_mount/Initialize()
+/obj/item/circuitboard/machine/pdc_mount/Initialize(mapload)
 	. = ..()
 	if(!build_path)
 		if(prob(50))
@@ -209,6 +203,7 @@
 		/obj/item/stack/sheet/mineral/titanium = 10,
 		/obj/item/stack/cable_coil = 5)
 	build_path = /obj/machinery/deck_turret
+	needs_anchored = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 /obj/item/circuitboard/machine/deck_gun/Destroy(force=FALSE)
@@ -273,6 +268,8 @@
 /obj/item/circuitboard/machine/missile_builder
 	name = "Seegson model 'Ford' robotic autowrench (board)"
 	build_path = /obj/machinery/missile_builder
+	req_components = list()
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/missile_builder/wirer
 	name = "Seegson model 'Ford' robotic autowirer (board)"

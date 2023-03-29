@@ -96,7 +96,7 @@
 
 /obj/machinery/ship_weapon/hybrid_rail/fire(atom/target, shots = weapon_type.burst_size, manual = TRUE)
 	set waitfor = FALSE //As to not hold up any feedback messages.
-	if(can_fire(shots))
+	if(can_fire(target, shots))
 		if(manual)
 			linked.last_fired = overlay
 		for(var/i = 0, i < shots, i++)
@@ -187,6 +187,7 @@
 		"<span class='italics'>You hear a heavy electrical crack.</span>")
 
 /obj/machinery/ship_weapon/hybrid_rail/multitool_act(mob/living/user, obj/item/I)
+	. = TRUE
 	if(maint_state < 2)
 		to_chat(user, "<span class='notice'>You must first open the maintenance panel before realigning the magnetic coils.</span>")
 	else
@@ -284,7 +285,7 @@
 	icon_state = "datadisk2"
 	max_blueprints = 2
 
-/obj/item/disk/design_disk/hybrid_rail_slugs/Initialize()
+/obj/item/disk/design_disk/hybrid_rail_slugs/Initialize(mapload)
 	. = ..()
 	var/datum/design/slug_cold_iron/A = new
 	var/datum/design/slug_uranium/B = new
